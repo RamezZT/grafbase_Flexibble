@@ -7,6 +7,7 @@ export const NavLinks = [
 ];
 
 export const categoryFilters = [
+    "ALL",
     "Frontend",
     "Backend",
     "Full-Stack",

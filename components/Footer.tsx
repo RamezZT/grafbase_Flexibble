@@ -3,7 +3,6 @@ import Image from "next/image";
 import { footerLinks } from "@/constants";
 import Link from "next/link";
 
-// console.log(footerLinks);
 type ColumnProps = {
   title: string;
   links: Array<string>;
