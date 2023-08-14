@@ -35,7 +35,7 @@ const Home = async ({
 }: Props) => {
   // we have an error when we set the category to null so this
   // line is initial until we solve the problem
-  !category ? (category = "ALL") : "";
+  !category ? (category = "Full-Stack") : "";
   const data = (await fetchAllProjects(
     category,
     endcursor,
