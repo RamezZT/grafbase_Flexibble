@@ -52,6 +52,7 @@ const Home = async ({
       return (
         <section className="flexStart flex-col paddings">
           <Categories />
+          <h1>length of projects is {projectsToDIsplay.length}</h1>
           <p className="no-result-text text-center ">
             No projects found, go create some first
           </p>
