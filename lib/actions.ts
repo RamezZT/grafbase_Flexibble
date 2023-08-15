@@ -1,7 +1,6 @@
 import { ProjectForm } from "@/common.types";
 import { getAllProjectsBackwardQuery, getBackwardProjectsQuery, createUserMutation, getUserQuery, createProjectMutation, projectsQuery, projectsQuery1, getProjectByIdQuery, getProjectsOfUserQuery, deleteProjectMutation, updateProjectMutation, getAllProjectsQuery, getAllUsersQuery } from "@/graphql";
 import { GraphQLClient, gql } from "graphql-request";
-import { getToken } from "next-auth/jwt";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : " http://127.0.0.1:4000/graphql";
@@ -14,10 +13,7 @@ export const client = new GraphQLClient(apiUrl);
 export const makeGraphQLRequest = async (query: string, variables = {}) => {
 
     try {
-
-        console.log(query);
         const a = await client.request(query, variables);
-        console.log(a);
         return a;
     } catch (error) {
         console.log(error);
