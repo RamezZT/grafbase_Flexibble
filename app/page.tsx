@@ -84,8 +84,8 @@ const Home = async ({
       </section>
     );
   } catch (error) {
-    console.log(error);
-    return <h1 className="">error occured</h1>;
+    // console.log(error.message);
+    return <h1 className="">{error.message}</h1>;
   }
 };
 
