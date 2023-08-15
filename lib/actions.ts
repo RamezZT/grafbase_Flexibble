@@ -102,7 +102,6 @@ export const fetchAllProjects = async (category?: string | null, endcursor?: str
         else if (category === "ALL")
             return makeGraphQLRequest(getAllProjectsQuery, { category, endcursor });
         else {
-            console.log("here");
             return makeGraphQLRequest(projectsQuery, { category, endcursor })
         }
     } catch (error) {

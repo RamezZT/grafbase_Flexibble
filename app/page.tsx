@@ -37,7 +37,7 @@ const Home = async ({
   // we have an error when we set the category to null so this
   // line is initial until we solve the problem
   try {
-    !category ? (category = "Full-Stack") : "";
+    !category ? (category = "ALL") : "";
     const data = (await fetchAllProjects(
       category,
       endcursor,
