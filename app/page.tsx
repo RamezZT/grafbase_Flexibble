@@ -33,54 +33,58 @@ type ProjectSearch = {
 const Home = async ({
   searchParams: { category, endcursor, back, startcursor },
 }: Props) => {
-  // // we have an error when we set the category to null so this
-  // // line is initial until we solve the problem
-  // !category ? (category = "Full-Stack") : "";
-  // //
-  // const data = (await fetchAllProjects(
-  //   category,
-  //   endcursor,
-  //   back,
-  //   startcursor
-  // )) as ProjectSearch;
-  // const pagination = data?.projectSearch?.pageInfo;
+  // we have an error when we set the category to null so this
+  // line is initial until we solve the problem
+  try {
+    !category ? (category = "Full-Stack") : "";
+    const data = (await fetchAllProjects(
+      category,
+      endcursor,
+      back,
+      startcursor
+    )) as ProjectSearch;
+    const pagination = data?.projectSearch?.pageInfo;
 
-  // const projectsToDIsplay = data?.projectSearch?.edges || [];
-  if (true) {
+    const projectsToDIsplay = data?.projectSearch?.edges || [];
+    console.log(projectsToDIsplay);
+    if (projectsToDIsplay.length === 0) {
+      return (
+        <section className="flexStart flex-col paddings">
+          <Categories />
+          <p className="no-result-text text-center ">
+            No projects found, go create some first
+          </p>
+        </section>
+      );
+    }
     return (
-      <section className="flexStart flex-col paddings">
+      <section className="flex-start flex-col paddings mb-16">
         <Categories />
-        <p className="no-result-text text-center ">
-          No projects found, go create some first
-        </p>
+
+        <section className="projects-grid">
+          {projectsToDIsplay.map(({ node }: { node: ProjectInterface }) => (
+            <ProjectCard
+              key={node?.id}
+              id={node?.id}
+              image={node?.image}
+              name={node?.createdBy?.name}
+              avatarUrl={node?.createdBy?.avatarUrl}
+              userId={node?.createdBy?.id}
+              title={node?.title}
+            />
+          ))}
+        </section>
+        <LoadMore
+          startCursor={pagination.startCursor}
+          endCursor={pagination.endCursor}
+          hasPreviousPage={pagination.hasPreviousPage}
+          hasNextPage={pagination.hasNextPage}
+        />
       </section>
     );
+  } catch (error) {
+    return <h1 className="">Error occured</h1>;
   }
-  return (
-    <section className="flex-start flex-col paddings mb-16">
-      <Categories />
-
-      {/* <section className="projects-grid">
-        {projectsToDIsplay.map(({ node }: { node: ProjectInterface }) => (
-          <ProjectCard
-            key={node?.id}
-            id={node?.id}
-            image={node?.image}
-            name={node?.createdBy?.name}
-            avatarUrl={node?.createdBy?.avatarUrl}
-            userId={node?.createdBy?.id}
-            title={node?.title}
-          />
-        ))}
-      </section>
-      <LoadMore
-        startCursor={pagination.startCursor}
-        endCursor={pagination.endCursor}
-        hasPreviousPage={pagination.hasPreviousPage}
-        hasNextPage={pagination.hasNextPage}
-      /> */}
-    </section>
-  );
 };
 
 export default Home;
