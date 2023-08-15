@@ -84,8 +84,12 @@ const Home = async ({
       </section>
     );
   } catch (error) {
-    // console.log(error.message);
-    return <h1 className="">{error.message}</h1>;
+    return (
+      <div>
+        <h1>Something went wrong</h1>
+        <h1 className="">{error.message}</h1>
+      </div>
+    );
   }
 };
 
