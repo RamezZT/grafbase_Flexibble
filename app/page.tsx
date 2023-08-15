@@ -1,8 +1,10 @@
+"use client";
 import { ProjectInterface } from "@/common.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
+import { Component } from "react";
 type searchParams = {
   category?: string | null;
   endcursor: string;
@@ -83,7 +85,11 @@ const Home = async ({
       </section>
     );
   } catch (error) {
-    return <h1 className="">Error occured</h1>;
+    return (
+      <h1 className="">
+        <Component>{error}</Component>
+      </h1>
+    );
   }
 };
 
