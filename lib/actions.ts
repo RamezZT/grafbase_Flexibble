@@ -87,18 +87,26 @@ export const craeteNewProject = async (form: ProjectForm, creatorId: string, tok
 export const fetchAllProjects = async (category?: string | null, endcursor?: string | null, back?: string, startcursor?: string | null) => {
     try {
         client.setHeader('x-api-key', apiKey);
-        if (back === "true")
-            if (category === "ALL")
-                return makeGraphQLRequest(getAllProjectsBackwardQuery, { startcursor });
-            else return makeGraphQLRequest(getBackwardProjectsQuery, { category, startcursor });
-        else if (category === "ALL")
-            return makeGraphQLRequest(getAllProjectsQuery, { category, endcursor });
-        else
-            return makeGraphQLRequest(projectsQuery, { category, endcursor })
+        return makeGraphQLRequest(projectsQuery, { category, endcursor })
     } catch (error) {
         console.log(error);
     }
 }
+// export const fetchAllProjects = async (category?: string | null, endcursor?: string | null, back?: string, startcursor?: string | null) => {
+//     try {
+//         client.setHeader('x-api-key', apiKey);
+//         if (back === "true")
+//             if (category === "ALL")
+//                 return makeGraphQLRequest(getAllProjectsBackwardQuery, { startcursor });
+//             else return makeGraphQLRequest(getBackwardProjectsQuery, { category, startcursor });
+//         else if (category === "ALL")
+//             return makeGraphQLRequest(getAllProjectsQuery, { category, endcursor });
+//         else
+//             return makeGraphQLRequest(projectsQuery, { category, endcursor })
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 export const getProjectDetails = async (id: string) => {
     client.setHeader('x-api-key', apiKey);
