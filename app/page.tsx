@@ -37,7 +37,7 @@ const Home = async ({
   // we have an error when we set the category to null so this
   // line is initial until we solve the problem
   try {
-    !category ? (category = "Full-Stack") : "";
+    !category ? (category = "ALL") : "";
     const data = (await fetchAllProjects(
       category,
       endcursor,
@@ -52,13 +52,6 @@ const Home = async ({
       return (
         <section className="flexStart flex-col paddings">
           <Categories />
-          <h1>length of projects is {projectsToDIsplay.length}</h1>
-          <h1>category is {category}</h1>
-          {data.projectSearch.edges.map((edge, idx) => (
-            <h1>
-              {idx} {edge.node.title}
-            </h1>
-          ))}
           <p className="no-result-text text-center ">
             No projects found, go create some first
           </p>
