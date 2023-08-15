@@ -33,20 +33,20 @@ type ProjectSearch = {
 const Home = async ({
   searchParams: { category, endcursor, back, startcursor },
 }: Props) => {
-  // we have an error when we set the category to null so this
-  // line is initial until we solve the problem
-  !category ? (category = "Full-Stack") : "";
-  //
-  const data = (await fetchAllProjects(
-    category,
-    endcursor,
-    back,
-    startcursor
-  )) as ProjectSearch;
-  const pagination = data?.projectSearch?.pageInfo;
+  // // we have an error when we set the category to null so this
+  // // line is initial until we solve the problem
+  // !category ? (category = "Full-Stack") : "";
+  // //
+  // const data = (await fetchAllProjects(
+  //   category,
+  //   endcursor,
+  //   back,
+  //   startcursor
+  // )) as ProjectSearch;
+  // const pagination = data?.projectSearch?.pageInfo;
 
-  const projectsToDIsplay = data?.projectSearch?.edges || [];
-  if (projectsToDIsplay.length === 0) {
+  // const projectsToDIsplay = data?.projectSearch?.edges || [];
+  if (true) {
     return (
       <section className="flexStart flex-col paddings">
         <Categories />
