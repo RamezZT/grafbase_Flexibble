@@ -286,3 +286,14 @@ export const getProjectsOfUserQuery = `
   }
 `;
 
+export const getAllUsersQuery = `query UserCollection {
+  userCollection(first: 100) {
+    edges {
+      node {
+        id
+        name
+        avatarUrl
+      }
+    }
+  }
+}`;

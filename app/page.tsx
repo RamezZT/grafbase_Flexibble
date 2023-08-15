@@ -4,6 +4,7 @@ import LoadMore from "@/components/LoadMore";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchAllProjects } from "@/lib/actions";
 import { Component } from "react";
+import UsersList from "@/components/UserCard";
 type searchParams = {
   category?: string | null;
   endcursor: string;
@@ -47,7 +48,7 @@ const Home = async ({
     const pagination = data?.projectSearch?.pageInfo;
 
     const projectsToDIsplay = data?.projectSearch?.edges || [];
-    console.log(projectsToDIsplay);
+    // console.log(projectsToDIsplay);
     if (projectsToDIsplay.length === 0) {
       return (
         <section className="flexStart flex-col paddings">
@@ -58,6 +59,7 @@ const Home = async ({
         </section>
       );
     }
+
     return (
       <section className="flex-start flex-col paddings mb-16">
         <Categories />

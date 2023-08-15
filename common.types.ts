@@ -25,6 +25,21 @@ export interface ProjectInterface {
   };
 }
 
+
+export interface UsersInterface {
+  userCollection: {
+    edges: [
+      {
+        node: {
+          name: string,
+          avatarUrl: string,
+          id: string
+        }
+      }
+    ]
+  }
+}
+
 export interface UserProfile {
   id: string;
   name: string;
