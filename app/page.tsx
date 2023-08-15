@@ -83,7 +83,7 @@ const Home = async ({
         />
       </section>
     );
-  } catch (error) {
+  } catch (error: any) {
     return (
       <div>
         <h1>Something went wrong</h1>
