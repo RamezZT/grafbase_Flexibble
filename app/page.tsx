@@ -1,4 +1,3 @@
-"use client";
 import { ProjectInterface } from "@/common.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";
@@ -85,11 +84,8 @@ const Home = async ({
       </section>
     );
   } catch (error) {
-    return (
-      <h1 className="">
-        <Component>{error}</Component>
-      </h1>
-    );
+    console.log(error);
+    return <h1 className="">error occured</h1>;
   }
 };
 
