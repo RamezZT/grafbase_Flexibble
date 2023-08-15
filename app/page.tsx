@@ -36,6 +36,7 @@ const Home = async ({
   // we have an error when we set the category to null so this
   // line is initial until we solve the problem
   !category ? (category = "Full-Stack") : "";
+  //
   const data = (await fetchAllProjects(
     category,
     endcursor,
@@ -59,7 +60,7 @@ const Home = async ({
     <section className="flex-start flex-col paddings mb-16">
       <Categories />
 
-      <section className="projects-grid">
+      {/* <section className="projects-grid">
         {projectsToDIsplay.map(({ node }: { node: ProjectInterface }) => (
           <ProjectCard
             key={node?.id}
@@ -77,7 +78,7 @@ const Home = async ({
         endCursor={pagination.endCursor}
         hasPreviousPage={pagination.hasPreviousPage}
         hasNextPage={pagination.hasNextPage}
-      />
+      /> */}
     </section>
   );
 };
