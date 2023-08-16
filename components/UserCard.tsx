@@ -1,7 +1,4 @@
-"use client";
 import React from "react";
-import { UsersInterface } from "@/common.types";
-import { fetchToken } from "@/lib/actions";
 import Image from "next/image";
 import Link from "next/link";
 type Props = {
@@ -24,7 +21,6 @@ const UserCard = ({ name, avatarUrl, id }: Props) => {
         <p className=" sm:text-122">{name}</p>
       </Link>
     );
-
   return <></>;
 };
 

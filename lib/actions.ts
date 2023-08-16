@@ -56,7 +56,6 @@ export const fetchToken = async () => {
     try {
         const response = await fetch(`${serverUrl}/api/auth/token`);
         const token = await response.json();
-
         return token;
     } catch (error) {
         throw error;
@@ -103,13 +102,9 @@ export const fetchAllProjects = async (category?: string | null, endcursor?: str
                 return makeGraphQLRequest(getAllProjectsBackwardQuery, { startcursor });
             else return makeGraphQLRequest(getBackwardProjectsQuery, { category, startcursor });
         else if (category === "ALL") {
-            console.log(category);
             return makeGraphQLRequest(getAllProjectsQuery, { endcursor });
         } else {
-            {
-                console.log("here");
-                return makeGraphQLRequest(projectsQuery, { category, endcursor })
-            }
+            return makeGraphQLRequest(projectsQuery, { category, endcursor })
         }
     } catch (error) {
         console.log(error);
