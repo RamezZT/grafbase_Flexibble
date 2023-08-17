@@ -6,7 +6,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt"
 import { craeteUser, getUser } from "./actions";
-
+import { redirect } from "next/navigation";
 export const authOpitions: NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -56,18 +56,18 @@ export const authOpitions: NextAuthOptions = {
         },
         async signIn({ user }: { user: AdapterUser | User }) {
             try {
-                console.log("here");
                 // get the user if they exist
                 const userExists = await getUser(user?.email as string) as { user?: UserProfile };
                 // if not create a new one
-                if (!userExists.user) {
-                    const b = await craeteUser(user.name as string, user.email as string, user.image as string);
-                    console.log(b);
-                }
-                return true
+                if (!userExists.user)
+                    await craeteUser(user.name as string, user.email as string, user.image as string);
+                redirect('/');
+                // return true
             } catch (error) {
                 console.log(error);
                 return false;
+            } finally {
+                return true;
             }
         }
     }
