@@ -2,9 +2,9 @@ import { ProjectInterface } from "@/common.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";
 import ProjectCard from "@/components/ProjectCard";
-import { fetchAllProjects } from "@/lib/actions";
-import { Component } from "react";
-import UsersList from "@/components/UserCard";
+import { client, fetchAllProjects } from "@/lib/actions";
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
 type searchParams = {
   category?: string | null;
   endcursor: string;
@@ -35,6 +35,12 @@ type ProjectSearch = {
 const Home = async ({
   searchParams: { category, endcursor, back, startcursor },
 }: Props) => {
+  const session = await getCurrentUser();
+
+  // this if statement will send the user to craete their profile if  it's their first time
+  if (session?.user?.firstLog) {
+    redirect(`/create-user/${session?.user?.id}`);
+  }
   // we have an error when we set the category to null so this
   // line is initial until we solve the problem
   try {

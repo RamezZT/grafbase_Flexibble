@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
 import { getAllUsers } from "@/lib/actions";
 import UserCard from "@/components/UserCard";
 import { UsersInterface } from "@/common.types";
+import { updateSchema } from "@/lib/actions";
+import { makeQueryType } from "@/common.types";
 const page = async () => {
   const {
     userCollection: { edges: users },

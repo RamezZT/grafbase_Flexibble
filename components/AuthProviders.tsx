@@ -1,10 +1,9 @@
 "use client";
-import { SessionInterface } from "@/common.types";
-import { authOpitions } from "@/lib/session";
-import { getServerSession } from "next-auth";
-import { useSession, getProviders, signIn, signOut } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import React, { useState, useEffect } from "react";
+import { getCurrentUser } from "@/lib/session";
 import Button from "./Button";
+import { useRouter } from "next/navigation";
 type Provider = {
   id: string;
   name: string;
@@ -17,7 +16,12 @@ type Provider = {
 type Providers = Record<string, Provider>;
 const AuthProviders = () => {
   const [providers, setProviders] = useState<Providers | null>(null);
-
+  const router = useRouter();
+  const signInHandler = async (provider: Provider) => {
+    await signIn(provider?.id);
+    const session = await getCurrentUser();
+    console.log(session);
+  };
   useEffect(() => {
     const fetchProvider = async () => {
       const res = await getProviders();
@@ -33,7 +37,7 @@ const AuthProviders = () => {
           <Button
             key={i}
             title="Sign In"
-            handleClick={() => signIn(provider?.id)}
+            handleClick={() => signInHandler(provider)}
           />
         ))}
       </div>

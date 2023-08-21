@@ -1,9 +1,11 @@
 import { ProjectForm } from "@/common.types";
-import { getAllProjectsBackwardQuery, getBackwardProjectsQuery, createUserMutation, getUserQuery, createProjectMutation, projectsQuery, projectsQuery1, getProjectByIdQuery, getProjectsOfUserQuery, deleteProjectMutation, updateProjectMutation, getAllProjectsQuery, getAllUsersQuery } from "@/graphql";
+import { getAllProjectsBackwardQuery, getBackwardProjectsQuery, createUserMutation, getUserQuery, createProjectMutation, projectsQuery, projectsQuery1, getProjectByIdQuery, getProjectsOfUserQuery, deleteProjectMutation, updateProjectMutation, getAllProjectsQuery, getAllUsersQuery, updateUserQuery } from "@/graphql";
+import { makeQuery } from "@/graphql";
+import { makeQueryType } from "@/common.types";
 import { GraphQLClient, gql } from "graphql-request";
-
-// const isProduction = process.env.NODE_ENV === 'production';
-const isProduction = process.env.NODE_ENV;
+import { UserInterface } from "@/common.types";
+const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = true;
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : " http://127.0.0.1:4000/graphql";
 const apiKey = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_KEY || '' : "letmein";
 const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : "http://localhost:3000";
@@ -16,7 +18,6 @@ export const makeGraphQLRequest = async (query: string, variables = {}) => {
     try {
         return await client.request(query, variables);
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -24,7 +25,7 @@ export const makeGraphQLRequest = async (query: string, variables = {}) => {
 
 export const getUser = (email: string) => {
 
-    client.setHeader('x-api-key', apiKey);
+    console.log(client.setHeader('x-api-key', apiKey));
 
     return makeGraphQLRequest(getUserQuery, { email });
 }
@@ -52,6 +53,7 @@ export const craeteUser = (name: string, email: string, avatarUrl: string) => {
     return makeGraphQLRequest(createUserMutation, variables);
 }
 
+
 export const fetchToken = async () => {
     try {
         const response = await fetch(`${serverUrl}/api/auth/token`);
@@ -76,7 +78,6 @@ export const uploadImage = async (imagePath: string) => {
 
 export const craeteNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
     const imageUrl = await uploadImage(form.image)
-    console.log(imageUrl);
     if (imageUrl.url) {
 
         client.setHeader("Authorization", `Bearer ${token}`);
@@ -147,7 +148,60 @@ export const updateProject = async (form: ProjectForm, projectId: string, token:
         id: projectId,
         input: updateForm
     }
-
-    client.setHeader("Authorization", `Bearer ${token}`);
+    client.setHeader("Authorization", `Bearer ${token}`)
     return makeGraphQLRequest(updateProjectMutation, variables);
 }
+
+export const updateUser = async (userData: UserInterface, token: string, id: string) => {
+
+    const variables = {
+        id,
+        input: {
+            ...userData,
+            firstLog: false
+        }
+    }
+    client.setHeader("Authorization", `Bearer ${token}`)
+    return makeGraphQLRequest(updateUserQuery, variables);
+}
+
+
+// i am going to create a function that request everysingle update along and see how it will work
+
+export const updateSchema = async (value: makeQueryType, token: string) => {
+
+    try {
+        client.setHeader("Authorization", `Bearer ${token}`);
+        const query = makeQuery(value);
+        await makeGraphQLRequest(query);
+    } catch (error) {
+
+    }
+}
+
+
+
+// i will clean it later but here is how u can call the update schema
+/**
+
+this code 
+// Array<{ identifier: string, identifierValue: string, fieldToUpdate: string, value: string }>
+  const updateArray: makeQueryType = users.map((node) => {
+    const obj = {
+      identifier: "id",
+      identifierValue: node.node.id,
+      fieldToUpdate: "firstLog",
+      value: "true",
+    };
+    return obj;
+  });
+  console.log(updateArray);
+  try {
+    const token = await fetchToken();
+    updateSchema(updateArray, token);
+  } catch (error) {
+    console.log(error);
+  }
+
+ * 
+ */

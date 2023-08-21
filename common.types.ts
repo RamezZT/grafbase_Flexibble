@@ -40,6 +40,12 @@ export interface UsersInterface {
   }
 }
 
+export interface UserInterface {
+  githubUrl: string;
+  linkedInUrl: string;
+  desciption: string;
+}
+
 export interface UserProfile {
   id: string;
   name: string;
@@ -65,6 +71,10 @@ export interface SessionInterface extends Session {
     name: string;
     email: string;
     avatarUrl: string;
+    desciption: string | null;
+    githubUrl: string | null;
+    linkedInUrl: string | undefined;
+    firstLog: boolean;
   };
 }
 
@@ -76,3 +86,5 @@ export interface ProjectForm {
   githubUrl: string;
   category: string;
 }
+
+export type makeQueryType = Array<{ identifier: string, identifierValue: string, fieldToUpdate: string, value: string }>;

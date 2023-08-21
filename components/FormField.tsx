@@ -5,6 +5,7 @@ type Props = {
   placeholder: string;
   isTextArea?: boolean;
   setState: (value: string) => void;
+  classnames?: string;
 };
 
 const FormField = ({
@@ -14,9 +15,10 @@ const FormField = ({
   placeholder,
   isTextArea,
   setState,
+  classnames,
 }: Props) => {
   return (
-    <div className="flexStart flex-col w-full  gap-4">
+    <div className={`flexStart flex-col w-full  gap-4 pb-4 ${classnames}`}>
       <label className="w-full text-gray-100" htmlFor="">
         {title}
       </label>

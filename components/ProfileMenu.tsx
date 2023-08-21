@@ -66,10 +66,10 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link
-                  href={`/profile/${session?.user?.id}`}
+                  href={`/create-user/${session?.user?.id}`}
                   className="text-sm"
                 >
-                  Settings
+                  Edit Profile
                 </Link>
               </Menu.Item>
               <Menu.Item>

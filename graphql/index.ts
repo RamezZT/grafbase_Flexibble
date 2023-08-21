@@ -1,3 +1,5 @@
+import { makeQueryType } from "@/common.types";
+
 export const getAllUsers = `query UserCollection {
     userCollection (first: 10) {
       edges {
@@ -44,6 +46,17 @@ export const updateProjectMutation = `
 		}
 	}
 `;
+
+export const updateUserQuery = `mutation UserUpdate($id:ID,$input:UserUpdateInput!) {
+    userUpdate(by: {id:$id}, input: $input) {
+      user {
+        desciption
+        githubUrl
+        linkedInUrl
+      }
+    }
+  }
+`
 
 export const deleteProjectMutation = `
   mutation DeleteProject($id: ID!) {
@@ -259,6 +272,7 @@ export const getUserQuery = `
       desciption
       githubUrl
       linkedInUrl
+      firstLog
     }
   }
 `;
@@ -297,3 +311,45 @@ export const getAllUsersQuery = `query UserCollection {
     }
   }
 }`;
+
+/*
+
+mutation UserUpdateMany {
+  userUpdateMany(input:
+   [
+    {
+    by:{email:"rameztayem@gmail.com"},
+    input:{firstLog:true}
+    }
+  ]) {
+    userCollection {
+      firstLog
+    }
+  }
+}
+*/
+export const makeQuery = (data: makeQueryType) => {
+
+  let q = `mutation UserUpdateMany {
+    userUpdateMany(input:
+     [`;
+
+  const arr = data.map(data => {
+    q += `{
+      by:{${data.identifier}:"${data.identifierValue}}",
+      input:{${data.fieldToUpdate}:${data.value}}
+      }
+    `
+  })
+
+  q += `
+  ]) {
+      userCollection {
+        ${data[0].fieldToUpdate}
+      }
+    }
+  }`
+
+  console.log(q);
+  return q;
+}

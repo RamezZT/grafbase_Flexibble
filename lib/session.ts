@@ -6,7 +6,6 @@ import GoogleProvider from 'next-auth/providers/google'
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT } from "next-auth/jwt"
 import { craeteUser, getUser } from "./actions";
-import { redirect } from "next/navigation";
 export const authOpitions: NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -43,11 +42,13 @@ export const authOpitions: NextAuthOptions = {
                 const data = await getUser(email) as {
                     user?: UserProfile
                 }
+                console.log(data);
                 const newSession = {
                     ...session, user: {
                         ...session.user, ...data?.user
                     }
                 }
+                console.log(newSession);
                 return newSession
             } catch (error) {
                 console.log("Error retreiving user data");
@@ -61,15 +62,13 @@ export const authOpitions: NextAuthOptions = {
                 // if not create a new one
                 if (!userExists.user)
                     await craeteUser(user.name as string, user.email as string, user.image as string);
-                redirect('/');
-                // return true
+                return true;
             } catch (error) {
                 console.log(error);
                 return false;
-            } finally {
-                return true;
             }
-        }
+        },
+
     }
 }
 export async function getCurrentUser() {
