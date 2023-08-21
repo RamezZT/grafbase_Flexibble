@@ -7,7 +7,7 @@ const page = async ({ params: { id } }: { params: { id: string } }) => {
   return (
     <Modal noEscape={session.user.firstLog}>
       <h1 className="flexCenter pb-8 ">Insert your Information</h1>
-      {/* <UserForm session={session} /> */}
+      <UserForm session={session} />
     </Modal>
   );
 };

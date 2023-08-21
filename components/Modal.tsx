@@ -8,7 +8,7 @@ const Modal = ({
   noEscape,
 }: {
   children: ReactNode;
-  noEscape: boolean;
+  noEscape?: boolean;
 }) => {
   const overlay = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
